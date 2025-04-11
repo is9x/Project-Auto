@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Auto</title>
+    <style>
+      /* General styles for a debug-themed UI */
+      body {
+        font-family: 'Courier New', Courier, monospace; /* Monospaced font for a technical feel */
+        background-color: #1e1e1e; /* Dark theme background */
+        color: #c5c5c5; /* Soft gray text */
+        margin: 20px;
+        line-height: 1.6;
+      }
+      h1 {
+        text-align: center;
+        color: #4CAF50;
+        margin-bottom: 5px;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: #2e2e2e; /* Slightly lighter gray for the container */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      }
+      label {
+        font-weight: bold;
+        color: #9cdcfe; /* Cyan for labels */
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background-color: #1e1e1e;
+        color: #c5c5c5;
+      }
+      input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      button {
+        background-color: #007acc; /* Blue for the button */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #005f9e;
+      }
+      .description {
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #c586c0; /* Soft pinkish hue for descriptions */
+      }
+      .output {
+        background: #1e1e1e;
+        padding: 10px;
+        border: 1px solid #444;
+        margin-top: 20px;
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        white-space: pre-wrap;
+        color: #c5c5c5;
+        overflow-y: auto;
+        max-height: 300px; /* Scrolling for long logs */
+      }
+      .chromium-logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      .chromium-logo img {
+        width: 40px;
+        height: 40px;
+      }
+    </style>
+    <script>
+      function removeAccess() {
+        const fileUrl = document.getElementById("fileUrl").value;
+        const debugMode = document.getElementById("debugMode").checked;
+        const enableDelay = document.getElementById("enableDelay").checked;
+
+        google.script.run.withSuccessHandler(function(message) {
+          document.getElementById("output").innerHTML = message;
+        }).removeEditorsAndViewers(fileUrl, debugMode, enableDelay);
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Chromium logo -->
+    <div class="chromium-logo">
+      <img src="https://www.chromium.org/_assets/icon-chromium-96.png" alt="Chromium Logo">
+    </div>
+
+    <div class="container">
+      <h1>Project Auto Debug Tool</h1>
+      <div class="description">
+        <p>Welcome to the Project Auto Debug Tool, a powerful tool for managing access to your Google Docs or Slides. Paste the file URL below to remove all editors, viewers, and commenters (except yourself).</p>
+        <p><strong>Debug Mode:</strong> Provides detailed logs of the removal process, including which users are skipped or removed.</p>
+        <p><strong>100ms Delay:</strong> Introduces a small delay between actions to handle larger files more smoothly.</p>
+      </div>
+      <label for="fileUrl">Enter File URL:</label>
+      <input type="text" id="fileUrl" placeholder="Enter file URL here">
+      <br>
+      <label>
+        <input type="checkbox" id="debugMode">
+        Enable Debugging
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" id="enableDelay">
+        Enable 100ms Delay
+      </label>
+      <br>
+      <button onclick="removeAccess()">Execute</button>
+      <div id="output" class="output"></div>
+    </div>
+  </body>
+</html>
